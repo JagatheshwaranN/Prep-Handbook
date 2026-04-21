@@ -1,4 +1,4 @@
-    # Rest Assured - Cookies Questions & Answers
+# Rest Assured - Cookies Questions & Answers
 
 ---
 
