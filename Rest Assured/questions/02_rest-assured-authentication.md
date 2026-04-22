@@ -18,19 +18,63 @@ Rest Assured supports various authentication mechanisms:
 
 ## 2. Explain Basic Authentication and how it is implemented in Rest Assured.
 
-Basic Authentication is a simple authentication scheme built into the HTTP protocol. It involves sending a **base64-encoded username and password** with each request.
+Basic Authentication is a simple authentication scheme built into the HTTP protocol. It involves sending a **base64-encoded username and password** with each request in the `Authorization` header.
 
-In Rest Assured, Basic Authentication can be implemented using the `.auth().basic(username, password)` method.
+There are two approaches:
+
+- **Challenge-based (default)**:  
+  The client first sends a request without credentials. The server responds with `401 Unauthorized`, and then the client retries with credentials.
+
+- **Preemptive Authentication**:  
+  The client sends the credentials **in the first request itself**, without waiting for a server challenge.
+
+In Rest Assured, both approaches are supported using:
+- `.auth().basic(username, password)` → Challenge-based authentication
+- `.auth().preemptive().basic(username, password)` → Preemptive authentication
 
 ---
 
 ## 3. How do you implement Basic Authentication in Rest Assured?
+
+### Challenge-Based Basic Authentication (Default)
 
 ```java
 RestAssured.given()
   .auth().basic("username", "password")
   .get("https://api.example.com/resource");
 ```
+
+- Sends request **without credentials initially**
+- Waits for `401 Unauthorized` response
+- Retries with `Authorization` header
+- Involves **two HTTP calls**
+
+### Preemptive Basic Authentication
+
+```java
+RestAssured.given()
+  .auth().preemptive().basic("username", "password")
+  .get("https://api.example.com/resource");
+```
+
+- Sends credentials **in the first request**
+- No `401` challenge required
+- Only **one HTTP call**
+- More efficient for API automation
+
+## Key Differences
+
+| Feature | basic() | preemptive().basic() |
+|--------|--------|----------------------|
+| Credentials sent | After 401 challenge | In first request |
+| HTTP calls | 2 | 1 |
+| Performance | Slower | Faster |
+| Use case | Strict protocol flow | Optimized API testing |
+
+## Summary
+
+- **Basic Auth (default)** follows the standard challenge-response mechanism
+- **Preemptive Basic Auth** skips the challenge and improves performance by sending credentials upfront
 
 ---
 

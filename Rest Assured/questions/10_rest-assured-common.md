@@ -21,6 +21,34 @@
 | Performance | Heavy | Lightweight |
 | Flexibility | Rigid | Flexible |
 
+## Protocol (SOAP) → Strict rulebook
+
+A protocol is a fixed set of rules that everyone must follow exactly to communicate.
+
+1. It tells you how to send, what format to use, how errors look, everything.
+2. Very structured and strict.
+3. Example: Like a formal postal service
+   → You must write the address in a specific format, use proper stamps, follow exact steps.
+
+👉 SOAP is a protocol because:
+
+1. It has predefined standards (XML format, strict messaging rules)
+2. You can’t freely change how communication works
+
+## Architectural Style (REST) → Flexible guideline
+
+An architectural style is more like a set of best practices or design guidelines, not strict rules.
+
+1. It tells you how things should be designed, but gives flexibility.
+2. You can choose how to implement details.
+3. Example: Like ordering food at a restaurant
+→ There’s a general flow (menu → order → get food), but different restaurants do it differently.
+
+👉 REST is an architectural style because:
+
+1. It uses standard web methods (GET, POST, etc.)
+2. But no strict format is enforced (can use JSON, XML, etc.)
+3. Developers have freedom in implementation
 ---
 
 ## 3. Sample API and JSON
