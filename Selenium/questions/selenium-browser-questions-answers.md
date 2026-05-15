@@ -55,7 +55,6 @@ Set the `--headless` argument in `ChromeOptions` before creating the WebDriver i
 ```java
 ChromeOptions options = new ChromeOptions();
 options.addArguments("--headless");
-options.addArguments("--disable-gpu");         // Recommended for Windows
 options.addArguments("--window-size=1920,1080"); // Set viewport size
 
 WebDriver driver = new ChromeDriver(options);
@@ -331,6 +330,23 @@ WebElement fileInput = driver.findElement(By.id("fileInput"));
 fileInput.sendKeys("/path/to/local/file.txt");
 ```
 
+What LocalFileDetector Actually Does?
+1. Detect that the path is a local file
+2. Upload/copy the file from your local machine
+3. Transfer it to the remote Selenium node
+4. Then perform the upload in the browser
+
+```
+Your Machine
+|
+| Selenium transfers file
+V
+Remote Browser Machine
+|
+| temp file created
+|
+Browser upload succeeds
+```
 ---
 
 ### 3. What are the implications of strict file interactability on test execution?

@@ -31,19 +31,21 @@ Select dropdown = new Select(dropdownElement);
 
 ### 3. What are the different methods provided by the Select class?
 
-| Method | Description |
-|--------|-------------|
-| `selectByVisibleText(String text)` | Selects the option that displays the given text. |
-| `selectByValue(String value)` | Selects the option with the matching `value` attribute. |
-| `selectByIndex(int index)` | Selects the option at the given index (0-based). |
-| `getOptions()` | Returns a list of all options in the dropdown. |
-| `getAllSelectedOptions()` | Returns a list of all currently selected options. |
-| `getFirstSelectedOption()` | Returns the first currently selected option. |
-| `deselectByVisibleText(String text)` | Deselects the option with the matching visible text. |
-| `deselectByValue(String value)` | Deselects the option with the matching `value` attribute. |
-| `deselectByIndex(int index)` | Deselects the option at the given index. |
-| `deselectAll()` | Deselects all selected options (multi-select only). |
-| `isMultiple()` | Returns `true` if the dropdown allows multiple selections. |
+| Method                                      | Description                                                  |
+|---------------------------------------------|--------------------------------------------------------------|
+| `selectByVisibleText(String text)`          | Selects the option that displays the given text.             |
+| `selectByContainsVisibleText(String text)`  | Selects the option that displays the partial given text.     |
+| `selectByValue(String value)`               | Selects the option with the matching `value` attribute.      |
+| `selectByIndex(int index)`                  | Selects the option at the given index (0-based).             |
+| `getOptions()`                              | Returns a list of all options in the dropdown.               |
+| `getAllSelectedOptions()`                   | Returns a list of all currently selected options.            |
+| `getFirstSelectedOption()`                  | Returns the first currently selected option.                 |
+| `deselectByVisibleText(String text)`        | Deselects the option with the matching visible text.         |
+| `deselectByContainsVisibleText(String text)` | Deselects the option with the matching partial visible text. |
+| `deselectByValue(String value)`             | Deselects the option with the matching `value` attribute.    |
+| `deselectByIndex(int index)`                | Deselects the option at the given index.                     |
+| `deselectAll()`                             | Deselects all selected options (multi-select only).          |
+| `isMultiple()`                              | Returns `true` if the dropdown allows multiple selections.   |
 
 ---
 
@@ -127,7 +129,7 @@ WebElement menuItem = driver.findElement(By.id("menuItem"));
 Actions actions = new Actions(driver);
 actions.moveToElement(menuItem).perform(); // Hover to trigger dropdown
 
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("dropdownId")));
 
 WebElement dropdownElement = driver.findElement(By.id("dropdownId"));
@@ -161,7 +163,7 @@ Identify the custom dropdown elements and simulate selection behavior using `cli
 driver.findElement(By.id("customDropdown")).click();
 
 // Wait for options and select
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 WebElement option = wait.until(ExpectedConditions.visibilityOfElementLocated(
     By.xpath("//ul[@class='dropdown-list']/li[text()='Option 1']")));
 option.click();
@@ -177,7 +179,7 @@ Send keys to the input field to trigger dynamic loading, wait for the options us
 WebElement inputField = driver.findElement(By.id("autocompleteInput"));
 inputField.sendKeys("Opt");
 
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.visibilityOfElementLocated(
     By.xpath("//ul[@class='suggestions']/li[text()='Option 1']")));
 
@@ -229,7 +231,7 @@ Select firstDropdown = new Select(driver.findElement(By.id("country")));
 firstDropdown.selectByVisibleText("India");
 
 // Wait for second dropdown to populate
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(By.xpath("//select[@id='state']/option"), 1));
 
 // Select from second dropdown
@@ -291,7 +293,7 @@ dropdown.click(); // Trigger dynamic loading
 
 **Step 2 — Wait for options to load:**
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(
     By.xpath("//div[@class='dropdown-options']/div")));
 ```
@@ -359,19 +361,21 @@ if (element.getTagName().equalsIgnoreCase("select")) {
 
 ## Select Class Methods — Quick Reference
 
-| Method | Description |
-|--------|-------------|
-| `selectByVisibleText(String)` | Select option by its displayed text. |
-| `selectByValue(String)` | Select option by its `value` attribute. |
-| `selectByIndex(int)` | Select option by its 0-based index. |
-| `deselectByVisibleText(String)` | Deselect option by its displayed text. |
-| `deselectByValue(String)` | Deselect option by its `value` attribute. |
-| `deselectByIndex(int)` | Deselect option by its 0-based index. |
-| `deselectAll()` | Deselect all selected options. |
-| `getOptions()` | Get all options as `List<WebElement>`. |
-| `getAllSelectedOptions()` | Get all currently selected options. |
-| `getFirstSelectedOption()` | Get the first selected option. |
-| `isMultiple()` | Check if dropdown supports multiple selections. |
+| Method                                | Description                                     |
+|---------------------------------------|-------------------------------------------------|
+| `selectByVisibleText(String)`         | Select option by its displayed text.            |
+| `selectByContainsVisibleText(String)` | Select option by its partial displayed text.    |
+| `selectByValue(String)`               | Select option by its `value` attribute.         |
+| `selectByIndex(int)`                  | Select option by its 0-based index.             |
+| `deselectByVisibleText(String)`       | Deselect option by its displayed text.          |
+| `deselectByContainsVisibleText(String)`       | Deselect option by its partial displayed text.         |
+| `deselectByValue(String)`             | Deselect option by its `value` attribute.       |
+| `deselectByIndex(int)`                | Deselect option by its 0-based index.           |
+| `deselectAll()`                       | Deselect all selected options.                  |
+| `getOptions()`                        | Get all options as `List<WebElement>`.          |
+| `getAllSelectedOptions()`             | Get all currently selected options.             |
+| `getFirstSelectedOption()`            | Get the first selected option.                  |
+| `isMultiple()`                        | Check if dropdown supports multiple selections. |
 
 ---
 

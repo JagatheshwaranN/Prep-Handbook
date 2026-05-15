@@ -210,7 +210,7 @@ for (Cookie cookie : sessionCookies) {
 Use `WebDriverWait` with `ExpectedConditions` to wait for the specific cookie to be set.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(driver -> driver.manage().getCookieNamed("asyncCookie") != null);
 Cookie asyncCookie = driver.manage().getCookieNamed("asyncCookie");
 ```
