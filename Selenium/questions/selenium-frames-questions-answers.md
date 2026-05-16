@@ -226,21 +226,6 @@ driver.findElement(By.id("elementInsideFrame")).click();
 
 ---
 
-### 19. How is `frameToBeAvailableAndSwitchToIt` different from `frameToBeAvailable`?
-
-| Method | Behavior |
-|--------|----------|
-| `frameToBeAvailable` | Waits until the frame is **present in the DOM**, but does **not switch** to it. |
-| `frameToBeAvailableAndSwitchToIt` | Waits until the frame is available **and automatically switches** to it — a convenient one-liner for synchronizing with frames. |
-
-```java
-// Waits for frame AND switches to it in one step
-WebDriverWait wait = new WebDriverWait(driver, 10);
-wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("frameId")));
-```
-
----
-
 ## Exceptions
 
 ---
