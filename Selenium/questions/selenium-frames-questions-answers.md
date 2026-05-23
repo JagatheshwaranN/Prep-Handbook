@@ -141,7 +141,7 @@ After switching to a frame, **all subsequent Selenium commands execute within th
 Use `WebDriverWait` with `ExpectedConditions.frameToBeAvailableAndSwitchToIt()` to wait until the frame is ready.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("frameId")));
 // Now interact with elements inside the frame
 ```
@@ -219,7 +219,7 @@ for (WebElement frame : frames) {
 This method is particularly useful when dealing with **dynamic web pages where frames may load or change asynchronously**, and you want to interact with elements inside those frames without risking `NoSuchFrameException`.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("dynamicFrame")));
 driver.findElement(By.id("elementInsideFrame")).click();
 ```
@@ -263,7 +263,7 @@ try {
 
 ```java
 // Preferred approach to prevent NoSuchFrameException
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("frameId")));
 ```
 

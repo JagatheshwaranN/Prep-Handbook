@@ -76,7 +76,7 @@ Yes, Selenium can handle **JavaScript alerts, confirms, and prompts** using the 
 Use `WebDriverWait` with `ExpectedConditions.alertIsPresent()` to wait for the alert before interacting with it.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 ```
@@ -161,7 +161,7 @@ alert.accept();
 Implement a generic alert handling mechanism using `ExpectedConditions.alertIsPresent()` with `WebDriverWait`. This ensures the script waits for the alert before interacting with it.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 alert.accept();
@@ -187,7 +187,7 @@ try {
 ### 16. Scenario: Waiting for Alert Presence — How can you use `WebDriverWait` to wait for an alert?
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 alert.accept();
@@ -283,7 +283,7 @@ Use a **JavaScript workaround** to override the `window.alert` function temporar
 Use `WebDriverWait` to wait for the alert, then provide credentials using `sendKeys()`.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 alert.sendKeys("username" + Keys.TAB + "password");
@@ -315,7 +315,7 @@ WebDriver driver = new ChromeDriver(options);
 Use `WebDriverWait` with `ExpectedConditions.alertIsPresent()` to wait for the alert regardless of timing.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 alert.accept();
@@ -330,7 +330,7 @@ Create a **utility method** that encapsulates the alert-handling logic, callable
 ```java
 public static void handleAlert(WebDriver driver) {
     try {
-        WebDriverWait wait = new WebDriverWait(driver, 10);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.alertIsPresent());
         Alert alert = driver.switchTo().alert();
         alert.accept();
@@ -351,7 +351,7 @@ After initiating the file upload, wait for the alert and handle it using standar
 driver.findElement(By.id("fileInput")).sendKeys("/path/to/file.txt");
 
 // Wait for and handle the alert
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 alert.accept();
@@ -388,7 +388,7 @@ An unhandled alert can **disrupt the test flow and cause test failures**. Implem
 Use `WebDriverWait` with `ExpectedConditions.alertIsPresent()` to wait for the alert during the page load.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.alertIsPresent());
 Alert alert = driver.switchTo().alert();
 alert.accept();

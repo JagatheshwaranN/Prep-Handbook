@@ -168,7 +168,7 @@ driver.switchTo().window(newWindow);
 Use `WebDriverWait` with `ExpectedConditions.numberOfWindowsToBe()` to wait until the expected number of windows are open.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 ```
 
@@ -205,7 +205,7 @@ for (String handle : handles) {
 Use dynamic waits with `ExpectedConditions` to wait for a specific element or condition in the new window before proceeding.
 
 ```java
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 // Switch to new window and wait for an element
 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("elementId")));
@@ -276,7 +276,7 @@ Use `WebDriverWait` to wait for the new window to appear, then switch to it.
 WebElement button = driver.findElement(By.id("openButton"));
 button.click();
 
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.numberOfWindowsToBe(2));
 
 Set<String> windowHandles = driver.getWindowHandles();

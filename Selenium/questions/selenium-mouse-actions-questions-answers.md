@@ -132,7 +132,7 @@ actions.contextClick(element)
 Actions actions = new Actions(driver);
 actions.contextClick(element).build().perform();
 
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 WebElement menuOption = wait.until(ExpectedConditions.visibilityOfElementLocated(
     By.xpath("//div[@class='context-menu']/li[text()='Desired Option']")));
 menuOption.click();
@@ -178,7 +178,7 @@ Use `moveToElement()` to hover, then implement a `WebDriverWait` to wait for the
 Actions actions = new Actions(driver);
 actions.moveToElement(element).build().perform();
 
-WebDriverWait wait = new WebDriverWait(driver, 10);
+WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("dynamicContent")));
 ```
 

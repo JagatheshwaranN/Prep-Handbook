@@ -208,7 +208,7 @@ protected void display(double d) { } // Valid overload
 
 ## 16. With `int[]` and `int...` (varargs) overloaded methods, which is called with multiple `int` arguments?
 
-The **varargs method** is called when multiple individual `int` arguments are passed, since `int[]` requires an explicit array.
+The **varargs method** and `int[]` requires can't be declared at the same time. We can have either one of them.
 
 ```java
 public void method(int[] arr) { System.out.println("array"); }
