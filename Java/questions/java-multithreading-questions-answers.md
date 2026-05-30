@@ -382,6 +382,100 @@ class StopFlag {
 
 > **Note:** `volatile` ensures **visibility** but not **atomicity** — use `AtomicInteger` or `synchronized` for compound operations like `i++`.
 
+Volatile guarantees that every thread sees the latest value from main memory (visibility), but it does not make compound operations atomic. For example, count++ consists of read, modify, and write steps. Two threads can interleave these steps and overwrite each other's updates, causing lost increments. For such operations, use AtomicInteger or synchronization.
+
+Example
+``` 
+count++;
+```
+Many people think this is a single operation, but it's actually three steps:
+
+```
+int temp = count;   // Read
+temp = temp + 1;    // Modify
+count = temp;       // Write
+```
+If multiple threads execute these steps simultaneously, updates can be lost.
+
+```
+class Counter {
+    volatile int count = 0;
+
+    public void increment() {
+        count++;
+    }
+}
+
+public class VolatileDemo {
+
+    public static void main(String[] args)
+            throws InterruptedException {
+
+        Counter counter = new Counter();
+
+        Thread t1 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                counter.increment();
+            }
+        });
+
+        Thread t2 = new Thread(() -> {
+            for (int i = 0; i < 10000; i++) {
+                counter.increment();
+            }
+        });
+
+        t1.start();
+        t2.start();
+
+        t1.join();
+        t2.join();
+
+        System.out.println(counter.count);
+    }
+}
+```
+Expected:
+```
+20000
+```
+Possible output:
+
+```
+18452 or 19781
+```
+Solution 1: synchronized
+
+```
+class Counter {
+    private int count = 0;
+
+    public synchronized void increment() {
+        count++;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+```
+Solution 2: AtomicInteger
+
+```
+import java.util.concurrent.atomic.AtomicInteger;
+
+class Counter {
+
+    AtomicInteger count = new AtomicInteger(0);
+
+    public void increment() {
+        count.incrementAndGet();
+    }
+}
+
+counter.increment();
+System.out.println(counter.count.get());
+```
 ---
 
 ## 22. Deadlock vs. Livelock
@@ -394,6 +488,102 @@ class StopFlag {
 | **Example** | Thread A holds Lock 1, waits for Lock 2; Thread B holds Lock 2, waits for Lock 1. | Two polite people stepping aside for each other repeatedly in a hallway. |
 | **Resolution** | Lock ordering, timeouts. | Randomized retry, backoff strategies. |
 
+Deadlock Example
+
+```
+class Resource {
+
+    public synchronized void methodA(Resource other) {
+
+        System.out.println(Thread.currentThread().getName()
+                + " acquired Resource A");
+
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        System.out.println(Thread.currentThread().getName()
+                + " waiting for Resource B");
+
+        other.methodB();
+    }
+
+    public synchronized void methodB() {
+        System.out.println(Thread.currentThread().getName()
+                + " acquired Resource B");
+    }
+}
+
+public class DeadlockDemo {
+
+    public static void main(String[] args) {
+
+        Resource r1 = new Resource();
+        Resource r2 = new Resource();
+
+        Thread t1 = new Thread(() -> {
+            r1.methodA(r2);
+        }, "Thread-1");
+
+        Thread t2 = new Thread(() -> {
+            r2.methodA(r1);
+        }, "Thread-2");
+
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+Livelock Example
+
+```
+class Worker {
+
+    private boolean active;
+
+    public Worker(boolean active) {
+        this.active = active;
+    }
+
+    public void work(Worker other) {
+
+        while (active) {
+
+            if (other.active) {
+                System.out.println(Thread.currentThread().getName()
+                        + ": You go first.");
+
+                try {
+                    Thread.sleep(100);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                continue;
+            }
+
+            System.out.println(Thread.currentThread().getName()
+                    + ": Working...");
+            active = false;
+        }
+    }
+}
+
+public class LivelockDemo {
+
+    public static void main(String[] args) {
+
+        Worker w1 = new Worker(true);
+        Worker w2 = new Worker(true);
+
+        new Thread(() -> w1.work(w2), "Worker-1").start();
+        new Thread(() -> w2.work(w1), "Worker-2").start();
+    }
+}
+```
 ---
 
 ## 23. Intrinsic Locking (`synchronized`) vs. Explicit Locking (`Lock` interface)
