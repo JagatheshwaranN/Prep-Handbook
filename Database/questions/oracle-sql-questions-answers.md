@@ -598,6 +598,99 @@ SELECT column1, column2 FROM table_name WHERE column_name LIKE pattern;
 | `INTERSECT` | Returns only rows that appear in **all** result sets. |
 | `MINUS` | Returns rows that appear in the **first** result set but **not** in the second. |
 
+**Sample Data (Employees_US Table):**
+
+| Emp_Id | Emp_Name |
+|--------|----------|
+| 1      | JOHN     |
+| 2      | MARY     |
+| 3      | DAVID    |
+
+**Sample Data (Employees_UK Table):**
+
+| Emp_Id | Emp_Name |
+|--------|----------|
+| 2      | MARY     |
+| 3      | DAVID    |
+| 4      | JAMES    |
+
+**UNION**
+
+```
+SELECT EmpID, Name
+FROM Employees_US
+
+UNION
+
+SELECT EmpID, Name
+FROM Employees_UK;
+```
+**Output:**
+
+| Emp_Id | Emp_Name |
+|--------|----------|
+| 1      | JOHN     |
+| 2      | MARY     |
+| 3      | DAVID    |
+| 4      | JAMES    |
+
+**UNION ALL**
+
+```
+SELECT EmpID, Name
+FROM Employees_US
+
+UNION ALL
+
+SELECT EmpID, Name
+FROM Employees_UK;
+```
+**Output:**
+
+| Emp_Id | Emp_Name |
+|--------|----------|
+| 1      | JOHN     |
+| 2      | MARY     |
+| 3      | DAVID    |
+| 2      | MARY     |
+| 3      | DAVID    |
+| 4      | JAMES    |
+
+**INTERSECT**
+
+```
+SELECT EmpID, Name
+FROM Employees_US
+
+INTERSECT
+
+SELECT EmpID, Name
+FROM Employees_UK;
+```
+**Output:**
+
+| Emp_Id | Emp_Name |
+|--------|----------|
+| 2      | MARY     |
+| 3      | DAVID    |
+
+**MINUS**
+
+```
+SELECT EmpID, Name
+FROM Employees_US
+
+MINUS
+
+SELECT EmpID, Name
+FROM Employees_UK;
+```
+**Output:**
+
+| Emp_Id | Emp_Name |
+|--------|----------|
+| 1      | JOHN     |
+
 ---
 
 ## 41. What is a View in Oracle? How do you create and retrieve data from a View?
