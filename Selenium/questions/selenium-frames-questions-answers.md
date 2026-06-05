@@ -116,19 +116,13 @@ driver.switchTo().defaultContent();
 
 ---
 
-### 11. What are frames in web pages, and why do we need to handle them in Selenium?
-
-Frames are **independent sections within a web page** that can display content from different sources — like separate windows within the same browser. We need to handle them in Selenium because elements within a frame are **not accessible by default**. Selenium's focus must be explicitly switched to the specific frame before interacting with its elements.
-
----
-
-### 12. What happens after switching to a frame?
+### 11. What happens after switching to a frame?
 
 After switching to a frame, **all subsequent Selenium commands execute within that frame's context** until you switch back to the main content or another frame.
 
 ---
 
-### 13. What challenges can you face when working with frames in Selenium?
+### 12. What challenges can you face when working with frames in Selenium?
 
 - **Identifying the correct frame** — especially when multiple frames exist without clear identifiers.
 - **Handling nested frames** — requires switching through each level sequentially.
@@ -136,7 +130,7 @@ After switching to a frame, **all subsequent Selenium commands execute within th
 
 ---
 
-### 14. How do you handle a frame that takes time to load?
+### 13. How do you handle a frame that takes time to load?
 
 Use `WebDriverWait` with `ExpectedConditions.frameToBeAvailableAndSwitchToIt()` to wait until the frame is ready.
 
@@ -148,7 +142,7 @@ wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(By.id("frameId")))
 
 ---
 
-### 15. How do you handle nested frames within a web page?
+### 14. How do you handle nested frames within a web page?
 
 Switch through each frame level sequentially:
 
@@ -177,7 +171,7 @@ driver.switchTo().defaultContent();
 
 ---
 
-### 16. What considerations should be taken when dealing with cross-origin frames?
+### 15. What considerations should be taken when dealing with cross-origin frames?
 
 Cross-origin frames may be subject to **Same-Origin Policy restrictions**. Considerations include:
 - Using `WebDriverWait` to wait for elements to be present before interaction.
@@ -186,7 +180,7 @@ Cross-origin frames may be subject to **Same-Origin Policy restrictions**. Consi
 
 ---
 
-### 17. How do you automate a test where multiple frames with similar characteristics exist?
+### 16. How do you automate a test where multiple frames with similar characteristics exist?
 
 Combine frame handling with content verification:
 
@@ -214,7 +208,7 @@ for (WebElement frame : frames) {
 
 ---
 
-### 18. When is `frameToBeAvailableAndSwitchToIt` essential?
+### 17. When is `frameToBeAvailableAndSwitchToIt` essential?
 
 This method is particularly useful when dealing with **dynamic web pages where frames may load or change asynchronously**, and you want to interact with elements inside those frames without risking `NoSuchFrameException`.
 

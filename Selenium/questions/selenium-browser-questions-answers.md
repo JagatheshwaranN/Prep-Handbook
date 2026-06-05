@@ -102,7 +102,7 @@ driver.get("https://example.com");
 
 ---
 
-## HTMLUnitDriver
+## HTMLUnitDriver [Deprecated]
 
 ---
 
