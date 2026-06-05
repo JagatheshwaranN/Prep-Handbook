@@ -115,6 +115,24 @@ Feature: Shopping Cart
 ## 10. How do you handle data tables and scenario outlines in Cucumber?
 
 - **Data Tables** — Used to pass tabular data directly to steps.
+
+```gherkin
+Scenario: Add multiple users
+  Given the following users exist
+    | Name  | Email            |
+    | John  | john@example.com |
+    | Jane  | jane@example.com |
+```
+
+```java
+@Given("the following users exist")
+public void theFollowingUsersExist(DataTable dataTable) {
+    List<Map<String, String>> users = dataTable.asMaps();
+    for (Map<String, String> user : users) {
+        System.out.println(user.get("Name") + " - " + user.get("Email"));
+    }
+}
+```
 - **Scenario Outlines** — Define a scenario template that runs with different sets of data provided in an `Examples` table.
 
 ```gherkin
@@ -149,26 +167,21 @@ Scenario Outline: Login with different credentials
 
 ---
 
-## 12. How do you handle data-driven testing with Cucumber?
-
-Cucumber supports **data tables in feature files** to provide multiple sets of data for a scenario. Step definitions can access this data using the `DataTable` library.
+## 12. Provide an example of using DataTables for parameterization in Cucumber.
 
 ```gherkin
-Scenario: Add multiple users
-  Given the following users exist
-    | Name  | Email            |
-    | John  | john@example.com |
-    | Jane  | jane@example.com |
-```
+Scenario Outline: Login with different credentials
+  Given I am on the login page
+  When I enter the following username and password
+    | Username   | Password |
+    | <username> | <password> |
+  And I click the login button
+  Then I should be logged in successfully
 
-```java
-@Given("the following users exist")
-public void theFollowingUsersExist(DataTable dataTable) {
-    List<Map<String, String>> users = dataTable.asMaps();
-    for (Map<String, String> user : users) {
-        System.out.println(user.get("Name") + " - " + user.get("Email"));
-    }
-}
+  Examples:
+    | username | password |
+    | user1    | pass1    |
+    | user2    | pass2    |
 ```
 
 ---
@@ -309,38 +322,13 @@ DataTables are useful when you need to:
 
 ---
 
-## 25. Provide an example of using DataTables for parameterization in Cucumber.
-
-```gherkin
-Scenario Outline: Login with different credentials
-  Given I am on the login page
-  When I enter the following username and password
-    | Username   | Password |
-    | <username> | <password> |
-  And I click the login button
-  Then I should be logged in successfully
-
-  Examples:
-    | username | password |
-    | user1    | pass1    |
-    | user2    | pass2    |
-```
-
----
-
-## 26. How do you handle dynamic DataTables with varying column lengths in Cucumber?
-
-Use **Scenario Outlines with Examples tables**. Each row in the `Examples` table represents a different set of data, allowing you to handle different DataTable structures dynamically.
-
----
-
-## 27. Are DataTables mutable in Cucumber?
+## 25. Are DataTables mutable in Cucumber?
 
 No, DataTables are **immutable by default** in Cucumber. Once created, the data in a DataTable cannot be modified.
 
 ---
 
-## 28. What is the BDD Approach?
+## 26. What is the BDD Approach?
 
 BDD (Behavior-Driven Development) is an approach where **everyone involved** (developers, testers, and stakeholders) collaborates to describe the desired behavior of the software before any coding begins.
 
@@ -356,7 +344,7 @@ Imagine building a shopping cart system:
 
 ---
 
-## 29. Is BDD a test automation framework?
+## 27. Is BDD a test automation framework?
 
 No, **BDD is a process or approach**, not a specific test automation framework. It is a collaborative approach that emphasizes clear communication between developers, testers, and stakeholders.
 
@@ -364,7 +352,7 @@ However, frameworks like **Cucumber** support the BDD process by providing tools
 
 ---
 
-## 30. What is the purpose of the `features` attribute in `@CucumberOptions`?
+## 28. What is the purpose of the `features` attribute in `@CucumberOptions`?
 
 The `features` attribute specifies the **location of the feature files** that contain the Gherkin syntax defining the behavior of the application.
 
@@ -374,7 +362,7 @@ The `features` attribute specifies the **location of the feature files** that co
 
 ---
 
-## 31. Explain the significance of the `tags` attribute in `@CucumberOptions`.
+## 29. Explain the significance of the `tags` attribute in `@CucumberOptions`.
 
 The `tags` attribute allows you to **include or exclude specific scenarios** during test execution based on the tags assigned in the feature files.
 
@@ -385,7 +373,7 @@ The `tags` attribute allows you to **include or exclude specific scenarios** dur
 
 ---
 
-## 32. What does the `glue` attribute represent in `@CucumberOptions`?
+## 30. What does the `glue` attribute represent in `@CucumberOptions`?
 
 The `glue` attribute specifies the **package where step definitions are located**. Cucumber uses this to locate the step definitions corresponding to the steps defined in the feature files.
 
@@ -395,7 +383,7 @@ The `glue` attribute specifies the **package where step definitions are located*
 
 ---
 
-## 33. Describe the purpose of the `plugin` attribute in `@CucumberOptions`.
+## 31. Describe the purpose of the `plugin` attribute in `@CucumberOptions`.
 
 The `plugin` attribute specifies the **types of reports or output formats** for test results.
 
@@ -412,7 +400,7 @@ The `plugin` attribute specifies the **types of reports or output formats** for 
 
 ---
 
-## 34. What does the `publish` attribute do in `@CucumberOptions`?
+## 32. What does the `publish` attribute do in `@CucumberOptions`?
 
 The `publish` attribute specifies whether to **publish generated reports** to the Cucumber reports server.
 
@@ -422,7 +410,7 @@ The `publish` attribute specifies whether to **publish generated reports** to th
 
 ---
 
-## 35. Explain the significance of the `monochrome` attribute in `@CucumberOptions`.
+## 33. Explain the significance of the `monochrome` attribute in `@CucumberOptions`.
 
 The `monochrome` attribute determines whether console output is displayed **with or without colors**. Setting `monochrome = true` removes colors, making the console output easier to read.
 
@@ -432,7 +420,7 @@ The `monochrome` attribute determines whether console output is displayed **with
 
 ---
 
-## 36. What is the purpose of the `strict` attribute in `@CucumberOptions`?
+## 34. What is the purpose of the `strict` attribute in `@CucumberOptions`?
 
 The `strict` attribute specifies whether to **treat undefined and pending steps as errors**. When `strict = true`, any undefined or pending steps will cause test execution to fail, ensuring all steps are properly implemented.
 
@@ -442,13 +430,13 @@ The `strict` attribute specifies whether to **treat undefined and pending steps 
 
 ---
 
-## 37. How can you rerun only the failed scenarios in Cucumber?
+## 35. How can you rerun only the failed scenarios in Cucumber?
 
 You can rerun failed scenarios using the **rerun plugin**, which generates a `.txt` file containing the paths of the failed scenarios. This file is then used as input for a subsequent test run.
 
 ---
 
-## 38. Explain how the rerun plugin works in Cucumber.
+## 36. Explain how the rerun plugin works in Cucumber.
 
 **Steps to configure and use the rerun plugin:**
 
@@ -470,7 +458,7 @@ You can rerun failed scenarios using the **rerun plugin**, which generates a `.t
 
 ---
 
-## 39. What are the ways to rerun failed scenarios in Cucumber?
+## 37. What are the ways to rerun failed scenarios in Cucumber?
 
 When using **TestNG** for execution, there are 2 ways to rerun failed Cucumber scenarios:
 
@@ -481,7 +469,7 @@ When using **TestNG** for execution, there are 2 ways to rerun failed Cucumber s
 
 ---
 
-## 40. How would you skip scenarios using tags in Cucumber?
+## 38. How would you skip scenarios using tags in Cucumber?
 
 Tag the scenarios you want to skip and use a tag expression to **exclude those tags** during execution.
 
@@ -497,7 +485,7 @@ Scenario: This scenario will be skipped
 
 ---
 
-## 41. Besides tags, are there other ways to skip scenarios in Cucumber?
+## 39. Besides tags, are there other ways to skip scenarios in Cucumber?
 
 Yes, scenarios can also be skipped **programmatically within hooks** using conditional logic and Cucumber's `Scenario` object.
 
